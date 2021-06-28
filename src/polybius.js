@@ -24,8 +24,8 @@ const polybiusModule = (function () {
       if (input.replace(/ /g, '').length % 2 === 1) {
         return false}
      
-        return input.match(/[0-9]{2}|\s/g).map(number => {
-          return decoded[number]
+        return input.match(/[0-9]{2}|\s/g).map(letter => {
+          return decoded[letter]
       }).join('')
     }
     }

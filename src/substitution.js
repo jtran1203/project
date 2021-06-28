@@ -6,55 +6,48 @@
 const substitutionModule = (function () {
   // you can add any code you want within this function scope
 
-  function substitution(input, alphabet, encode = true) {
-    let final = "";
-    let normalAlphabets = "abcdefghijklmnopqrstuvwxyz";
-    input = input.toLowerCase();
-   
 
-    function secret(str) {
+  function substitution(input, alphabet, encode = true) {
+    let outcome = '';
+    let secretWord = 'abcdefghijklmnopqrstuvwxyz'
+    input = input.toLowerCase()
+
+
+    function secret(word) {
       let obj = {};
-      for (let i = 0; i < str.length; i++) {
-        let char = str[i];
-        if (obj[char]) return false;
-        else obj[char] = true;
+      for (let i = 0; i < word.length; i++) {
+        let letter = word[i];
+        if (obj[letter]) {return false;}
+        else {obj[letter] = true;}
       }
       return true;
     }
 
-    try {
-      if (!alphabet || alphabet.length !== 26 || !secret(alphabet)) {
-        throw false;
-      } else if (encode) {
-        for (let i = 0; i < input.length; i++) {
-          let index = normalAlphabets.indexOf(input[i]);
-          console.log(index);
-          if (index === -1 && input[i] === " ") {
-            final += " ";
-          } else {
-            final += alphabet[index];
-          }
-        }
-      } else if (!encode) {
-        for (let i = 0; i < input.length; i++) {
-          let index = alphabet.indexOf(input[i]);
-          console.log(index);
-          if (index === -1 && input[i] === " ") {
-            final += " ";
-          } else {
-            final += normalAlphabets[index];
-          }
-        }
-      }
-      return final;
-     catch (error) {
-      return error;
-    }
-  }
+    if (!alphabet || alphabet.length !== 26 || !secret(alphabet)) {
+      return false;}
+  
 
-  return {
-    substitution,
-  };
-})();
+    
+    alphabet = alphabet.split('')
+  
+    let final = {}
+    let decode = {}
+    
+    secretWord.split('').forEach((something, index) => {
+      final[something] = alphabet[index]
+      decode[alphabet[index]] = something
+    })
+    if(!encode) final= decode
+    input.split('').forEach(input => {
+      outcome += input === ' ' ? ' ' : final[input]
+    })
+    return outcome
+   }
+  
+   return {
+     substitution,
+   };
+  })();
 
 module.exports = { substitution: substitutionModule.substitution };
+
